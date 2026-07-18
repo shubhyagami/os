@@ -838,6 +838,14 @@
       logBoot("Initializing x86 virtual machine", "ok");
       setProgress(5);
 
+      if (typeof V86 === "undefined") {
+        setBootStatus("Error: V86 failed to load (SharedArrayBuffer disabled)");
+        bootStatus.classList.add("error");
+        logBoot("FATAL: V86 is not defined. The Vercel deployment might still be updating, or the browser is blocking SharedArrayBuffer. Please ensure the vercel.json headers are active.", "err");
+        setStatusBar("error", "Error");
+        return;
+      }
+
       try {
         emulator = new V86({
           screen_container: document.getElementById("screen_container"),
