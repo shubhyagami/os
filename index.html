@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shubhulator</title>
+  <meta name="description"
+    content="Run TinyCore Linux directly in your browser with this web-based x86 emulator. No installation required.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep: #0a0a0f;
+      --bg-surface: #12121a;
+      --bg-elevated: #1a1a28;
+      --accent-primary: #6366f1;
+      --accent-secondary: #818cf8;
+      --accent-glow: rgba(99, 102, 241, 0.35);
+      --text-primary: #e8e8f0;
+      --text-secondary: #8888a0;
+      --text-muted: #55556a;
+      --border-subtle: rgba(255, 255, 255, 0.06);
+      --border-accent: rgba(99, 102, 241, 0.3);
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --error: #ef4444;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', monospace;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ─── Animated background ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% -20%, rgba(99, 102, 241, 0.12), transparent),
+        radial-gradient(ellipse 60% 50% at 80% 100%, rgba(139, 92, 246, 0.08), transparent),
+        radial-gradient(ellipse 50% 40% at 10% 80%, rgba(59, 130, 246, 0.06), transparent);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── Top Toolbar ─── */
+    #toolbar {
+      position: relative;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
+      background: rgba(18, 18, 26, 0.85);
+      backdrop-filter: blur(16px) saturate(1.4);
+      -webkit-backdrop-filter: blur(16px) saturate(1.4);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    #toolbar .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #toolbar .logo-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(135deg, var(--accent-primary), #8b5cf6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      box-shadow: 0 2px 8px var(--accent-glow);
+    }
+
+    #toolbar .logo-text {
+      font-weight: 600;
+      font-size: 15px;
+      letter-spacing: -0.3px;
+    }
+
+    #toolbar .logo-badge {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--accent-secondary);
+      background: rgba(99, 102, 241, 0.12);
+      padding: 2px 8px;
+      border-radius: 100px;
+      border: 1px solid rgba(99, 102, 241, 0.2);
+    }
+
+    .toolbar-spacer {
+      flex: 1;
+    }
+
+    .toolbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tb-btn {
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tb-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-primary);
+      border-color: rgba(255, 255, 255, 0.12);
+      transform: translateY(-1px);
+    }
+
+    .tb-btn:active {
+      transform: translateY(0);
+    }
+
+    .tb-btn.accent {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: var(--border-accent);
+      color: var(--accent-secondary);
+    }
+
+    .tb-btn.accent:hover {
+      background: rgba(99, 102, 241, 0.25);
+      color: #a5b4fc;
+    }
+
+    .tb-btn svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    .tb-divider {
+      width: 1px;
+      height: 20px;
+      background: var(--border-subtle);
+      margin: 0 4px;
+    }
+
+    /* ─── Main Content Area ─── */
+    #main-content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+      padding: 16px;
+      min-height: 0;
+    }
+
+    /* ─── Monitor Frame ─── */
+    #monitor-frame {
+      position: relative;
+      width: 100%;
+      max-width: 960px;
+      aspect-ratio: 4 / 3;
+      max-height: calc(100vh - 120px);
+      background: #000;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow:
+        0 0 0 1px rgba(0, 0, 0, 0.8),
+        0 4px 24px rgba(0, 0, 0, 0.6),
+        0 0 80px rgba(99, 102, 241, 0.06);
+      overflow: hidden;
+      transition: box-shadow 0.4s ease;
+    }
+
+    #monitor-frame.running {
+      box-shadow:
+        0 0 0 1px rgba(0, 0, 0, 0.8),
+        0 4px 24px rgba(0, 0, 0, 0.6),
+        0 0 60px rgba(99, 102, 241, 0.1),
+        inset 0 0 80px rgba(99, 102, 241, 0.03);
+    }
+
+    /* ─── Screen Container (v86 target) ─── */
+    #screen_container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+    }
+
+    #screen_container canvas,
+    #screen_container div {
+      /* Removed width/height 100% to let v86 handle intrinsic sizing */
+    }
+
+    #screen_container canvas {
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+      transform-origin: center;
+    }
+
+    /* ─── Scanline overlay ─── */
+    #monitor-frame::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(0deg,
+          transparent,
+          transparent 2px,
+          rgba(0, 0, 0, 0.03) 2px,
+          rgba(0, 0, 0, 0.03) 4px);
+      pointer-events: none;
+      z-index: 2;
+      border-radius: var(--radius-lg);
+    }
+
+    /* ─── Boot / Loading Overlay ─── */
+    #boot-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, #08080e 0%, #0c0c16 100%);
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+      border-radius: var(--radius-lg);
+    }
+
+    #boot-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .boot-logo {
+      width: 72px;
+      height: 72px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, var(--accent-primary), #8b5cf6, #a855f7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 28px;
+      animation: pulse-glow 2s ease-in-out infinite;
+      box-shadow: 0 0 40px var(--accent-glow);
+    }
+
+    @keyframes pulse-glow {
+
+      0%,
+      100% {
+        box-shadow: 0 0 30px var(--accent-glow);
+        transform: scale(1);
+      }
+
+      50% {
+        box-shadow: 0 0 50px rgba(99, 102, 241, 0.5);
+        transform: scale(1.03);
+      }
+    }
+
+    .boot-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      letter-spacing: -0.3px;
+    }
+
+    .boot-subtitle {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+    }
+
+    /* Progress bar */
+    .boot-progress {
+      width: 260px;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 100px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .boot-progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+      border-radius: 100px;
+      transition: width 0.4s ease;
+      box-shadow: 0 0 12px var(--accent-glow);
+    }
+
+    .boot-status {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      min-height: 18px;
+      transition: color 0.3s ease;
+    }
+
+    .boot-status.error {
+      color: var(--error);
+    }
+
+    /* Terminal-style log */
+    .boot-log {
+      margin-top: 24px;
+      width: 340px;
+      max-height: 120px;
+      overflow-y: auto;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .boot-log::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .boot-log::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .boot-log::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+    }
+
+    .log-entry {
+      opacity: 0;
+      animation: fadeInLog 0.3s ease forwards;
+    }
+
+    .log-entry .log-time {
+      color: var(--text-muted);
+      margin-right: 6px;
+    }
+
+    .log-entry .log-ok {
+      color: var(--success);
+    }
+
+    .log-entry .log-warn {
+      color: var(--warning);
+    }
+
+    .log-entry .log-err {
+      color: var(--error);
+    }
+
+    @keyframes fadeInLog {
+      from {
+        opacity: 0;
+        transform: translateY(4px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ─── Status Bar ─── */
+    #status-bar {
+      position: relative;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      padding: 6px 20px;
+      background: rgba(18, 18, 26, 0.85);
+      backdrop-filter: blur(16px) saturate(1.4);
+      -webkit-backdrop-filter: blur(16px) saturate(1.4);
+      border-top: 1px solid var(--border-subtle);
+      font-size: 11px;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      gap: 16px;
+    }
+
+    .status-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      transition: background 0.3s ease;
+    }
+
+    .status-dot.active {
+      background: var(--success);
+      box-shadow: 0 0 6px rgba(34, 197, 94, 0.5);
+      animation: blink 2s ease-in-out infinite;
+    }
+
+    .status-dot.booting {
+      background: var(--warning);
+      box-shadow: 0 0 6px rgba(245, 158, 11, 0.5);
+      animation: blink 1s ease-in-out infinite;
+    }
+
+    .status-dot.error {
+      background: var(--error);
+      box-shadow: 0 0 6px rgba(239, 68, 68, 0.5);
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.4;
+      }
+    }
+
+    .status-spacer {
+      flex: 1;
+    }
+
+    /* ─── Fullscreen ─── */
+    body.fullscreen #toolbar,
+    body.fullscreen #status-bar {
+      display: none;
+    }
+
+    body.fullscreen #main-content {
+      padding: 0;
+    }
+
+    body.fullscreen #monitor-frame {
+      max-width: 100%;
+      max-height: 100vh;
+      border-radius: 0;
+      border: none;
+    }
+
+    body.fullscreen #monitor-frame::after {
+      border-radius: 0;
+    }
+
+    body.fullscreen #boot-overlay {
+      border-radius: 0;
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 768px) {
+      #toolbar {
+        padding: 8px 12px;
+        gap: 6px;
+      }
+
+      .tb-btn {
+        padding: 5px 10px;
+        font-size: 11px;
+      }
+
+      .tb-btn span {
+        display: none;
+      }
+
+      #main-content {
+        padding: 8px;
+      }
+
+      #monitor-frame {
+        border-radius: var(--radius-md);
+      }
+
+      #boot-overlay {
+        border-radius: var(--radius-md);
+      }
+
+      #monitor-frame::after {
+        border-radius: var(--radius-md);
+      }
+
+      #status-bar {
+        padding: 5px 12px;
+        font-size: 10px;
+        gap: 10px;
+      }
+
+      .boot-log {
+        width: 280px;
+      }
+    }
+
+    /* ─── Tooltip ─── */
+    [data-tooltip] {
+      position: relative;
+    }
+
+    [data-tooltip]::before {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%) translateY(4px);
+      padding: 5px 10px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+      font-size: 11px;
+      font-weight: 400;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      border: 1px solid var(--border-subtle);
+      z-index: 50;
+    }
+
+    [data-tooltip]:hover::before {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ─── Toolbar ─── -->
+  <div id="toolbar">
+    <div class="logo">
+      <div class="logo-icon">SH</div>
+      <span class="logo-text">TOS by Shubh</span>
+      <span class="logo-badge">v86 Emulator</span>
+    </div>
+
+    <div class="toolbar-spacer"></div>
+
+    <div class="toolbar-actions">
+      <button id="btn-restart" class="tb-btn" data-tooltip="Restart VM" onclick="restartVM()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <polyline points="23 4 23 10 17 10" />
+          <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+        </svg>
+        <span>Restart</span>
+      </button>
+
+      <button id="btn-pause" class="tb-btn" data-tooltip="Pause / Resume" onclick="togglePause()">
+        <svg id="icon-pause" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <rect x="6" y="4" width="4" height="16" />
+          <rect x="14" y="4" width="4" height="16" />
+        </svg>
+        <svg id="icon-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+          <polygon points="5 3 19 12 5 21 5 3" />
+        </svg>
+        <span>Pause</span>
+      </button>
+
+      <button class="tb-btn" data-tooltip="Paste Text" onclick="pasteText()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+          <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+        </svg>
+        <span>Paste</span>
+      </button>
+
+      <div class="tb-divider"></div>
+
+      <button class="tb-btn" data-tooltip="Send Ctrl+Alt+Del" onclick="sendCAD()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <rect x="2" y="4" width="20" height="16" rx="2" />
+          <line x1="6" y1="8" x2="6" y2="8" />
+          <line x1="10" y1="8" x2="18" y2="8" />
+        </svg>
+        <span>Ctrl+Alt+Del</span>
+      </button>
+
+      <div class="tb-divider"></div>
+
+      <button class="tb-btn accent" data-tooltip="Toggle Fullscreen" onclick="toggleFullscreen()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <polyline points="15 3 21 3 21 9" />
+          <polyline points="9 21 3 21 3 15" />
+          <line x1="21" y1="3" x2="14" y2="10" />
+          <line x1="3" y1="21" x2="10" y2="14" />
+        </svg>
+        <span>Fullscreen</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ─── Main Area ─── -->
+  <div id="main-content">
+    <div id="monitor-frame">
+
+      <!-- Boot overlay -->
+      <div id="boot-overlay">
+        <div class="boot-logo">TC</div>
+        <div class="boot-title">Starting TinyCore OS</div>
+        <div class="boot-subtitle">Initializing x86 virtual machine…</div>
+        <div class="boot-progress">
+          <div class="boot-progress-bar" id="progress-bar"></div>
+        </div>
+        <div class="boot-status" id="boot-status">Preparing emulator…</div>
+        <div class="boot-log" id="boot-log"></div>
+      </div>
+
+      <!-- v86 screen target -->
+      <div id="screen_container"></div>
+    </div>
+  </div>
+
+  <!-- ─── Status Bar ─── -->
+  <div id="status-bar">
+    <div class="status-item">
+      <div class="status-dot" id="status-dot"></div>
+      <span id="status-label">Idle</span>
+    </div>
+    <div class="status-item">
+      <span id="mem-info">RAM: 256 MB</span>
+    </div>
+    <div class="status-item">
+      <span id="vga-info">VGA: 8 MB</span>
+    </div>
+    <div class="status-spacer"></div>
+    <div class="status-item">
+      <span id="uptime">00:00:00</span>
+    </div>
+  </div>
+
+  <!-- ─── Scripts ─── -->
+  <script src="/v86/libv86.js"></script>
+  <script>
+    // ─── State ───
+    var emulator = null;
+    var isPaused = false;
+    var isRunning = false;
+    var uptimeStart = null;
+    var uptimeInterval = null;
+
+    // ─── DOM refs ───
+    var bootOverlay = document.getElementById("boot-overlay");
+    var progressBar = document.getElementById("progress-bar");
+    var bootStatus = document.getElementById("boot-status");
+    var bootLog = document.getElementById("boot-log");
+    var statusDot = document.getElementById("status-dot");
+    var statusLabel = document.getElementById("status-label");
+    var monitorFrame = document.getElementById("monitor-frame");
+
+    // ─── Logging ───
+    function logBoot(msg, type) {
+      var now = new Date();
+      var ts = String(now.getHours()).padStart(2, "0") + ":" +
+        String(now.getMinutes()).padStart(2, "0") + ":" +
+        String(now.getSeconds()).padStart(2, "0");
+      var colorClass = type === "ok" ? "log-ok" : type === "warn" ? "log-warn" : type === "err" ? "log-err" : "";
+      var entry = document.createElement("div");
+      entry.className = "log-entry";
+      entry.innerHTML = '<span class="log-time">[' + ts + ']</span> <span class="' + colorClass + '">' + msg + '</span>';
+      bootLog.appendChild(entry);
+      bootLog.scrollTop = bootLog.scrollHeight;
+    }
+
+    function setBootStatus(msg) {
+      bootStatus.textContent = msg;
+    }
+
+    function setProgress(pct) {
+      progressBar.style.width = Math.min(100, Math.max(0, pct)) + "%";
+    }
+
+    function setStatusBar(state, label) {
+      statusDot.className = "status-dot " + state;
+      statusLabel.textContent = label;
+    }
+
+    function hideBootOverlay() {
+      bootOverlay.classList.add("hidden");
+      monitorFrame.classList.add("running");
+      isRunning = true;
+      setStatusBar("active", "Running");
+
+      // Start uptime timer
+      uptimeStart = Date.now();
+      var uptimeEl = document.getElementById("uptime");
+      uptimeInterval = setInterval(function () {
+        var elapsed = Math.floor((Date.now() - uptimeStart) / 1000);
+        var h = String(Math.floor(elapsed / 3600)).padStart(2, "0");
+        var m = String(Math.floor((elapsed % 3600) / 60)).padStart(2, "0");
+        var s = String(elapsed % 60).padStart(2, "0");
+        uptimeEl.textContent = h + ":" + m + ":" + s;
+      }, 1000);
+    }
+
+    // ─── VM Controls ───
+    function restartVM() {
+      if (emulator) {
+        emulator.restart();
+        setStatusBar("booting", "Restarting…");
+        logBoot("VM restart requested", "warn");
+      }
+    }
+
+    function togglePause() {
+      if (!emulator || !isRunning) return;
+      if (isPaused) {
+        emulator.run();
+        isPaused = false;
+        document.getElementById("icon-pause").style.display = "";
+        document.getElementById("icon-play").style.display = "none";
+        document.getElementById("btn-pause").querySelector("span").textContent = "Pause";
+        setStatusBar("active", "Running");
+        logBoot("VM resumed", "ok");
+      } else {
+        emulator.stop();
+        isPaused = true;
+        document.getElementById("icon-pause").style.display = "none";
+        document.getElementById("icon-play").style.display = "";
+        document.getElementById("btn-pause").querySelector("span").textContent = "Resume";
+        setStatusBar("booting", "Paused");
+        logBoot("VM paused", "warn");
+      }
+    }
+
+    function sendCAD() {
+      if (emulator) {
+        // Send Ctrl+Alt+Del key sequence
+        emulator.keyboard_send_scancodes([
+          0x1D, // Ctrl down
+          0x38, // Alt down
+          0x53, // Del down
+          0xD3, // Del up
+          0xB8, // Alt up
+          0x9D, // Ctrl up
+        ]);
+        logBoot("Sent Ctrl+Alt+Del", "warn");
+      }
+    }
+
+    async function pasteText() {
+      if (!emulator) return;
+      try {
+        const text = await navigator.clipboard.readText();
+        if (text) {
+          emulator.keyboard_send_text(text);
+          logBoot("Pasted text into VM", "ok");
+        }
+      } catch (err) {
+        logBoot("Clipboard access denied", "err");
+        alert("Clipboard access denied. Please grant permission in your browser.");
+      }
+    }
+
+    document.addEventListener("paste", function(e) {
+      if (!emulator) return;
+      var text = (e.clipboardData || window.clipboardData).getData("text");
+      if (text) {
+        e.preventDefault();
+        emulator.keyboard_send_text(text);
+        logBoot("Pasted text via Ctrl+V", "ok");
+      }
+    });
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().then(function () {
+          document.body.classList.add("fullscreen");
+        }).catch(function () { });
+      } else {
+        document.exitFullscreen().then(function () {
+          document.body.classList.remove("fullscreen");
+        }).catch(function () { });
+      }
+    }
+
+    document.addEventListener("fullscreenchange", function () {
+      if (!document.fullscreenElement) {
+        document.body.classList.remove("fullscreen");
+      }
+    });
+
+    // ─── Boot Emulator ───
+    window.addEventListener("load", function () {
+      setBootStatus("Initializing v86 emulator…");
+      setStatusBar("booting", "Booting");
+      logBoot("Initializing x86 virtual machine", "ok");
+      setProgress(5);
+
+      try {
+        emulator = new V86({
+          screen_container: document.getElementById("screen_container"),
+          bios: { url: "/v86/seabios.bin" },
+          vga_bios: { url: "/v86/vgabios.bin" },
+          cdrom: { url: "/TinyCore-current.iso" },
+          autostart: true,
+          memory_size: 256 * 1024 * 1024,
+          vga_memory_size: 8 * 1024 * 1024,
+          wasm_path: "/v86/v86.wasm",
+          network_relay_url: "wss://relay.widgetry.org/",
+        });
+
+        logBoot("V86 instance created", "ok");
+        setProgress(10);
+
+        // Download progress
+        var fileNames = ["SeaBIOS", "VGA BIOS", "v86 WASM", "TinyCore ISO"];
+        var lastFileIndex = -1;
+
+        emulator.add_listener("download-progress", function (e) {
+          if (e.file_index !== lastFileIndex) {
+            lastFileIndex = e.file_index;
+            logBoot("Downloading " + (fileNames[e.file_index] || "file " + e.file_index) + "…");
+          }
+          var pct = e.total > 0 ? Math.round(e.loaded / e.total * 100) : 0;
+          var basePct = 10 + (e.file_index * 20);
+          var filePct = basePct + Math.round(pct * 0.18);
+          setProgress(filePct);
+
+          if (e.file_index < fileNames.length) {
+            if (e.total > 0) {
+              var mbLoaded = (e.loaded / 1048576).toFixed(1);
+              var mbTotal = (e.total / 1048576).toFixed(1);
+              setBootStatus("Downloading " + fileNames[e.file_index] + ": " + pct + "% (" + mbLoaded + "/" + mbTotal + " MB)");
+            } else {
+              setBootStatus("Downloading " + fileNames[e.file_index] + "…");
+            }
+          }
+
+          if (pct === 100 && e.file_index < fileNames.length) {
+            logBoot(fileNames[e.file_index] + " loaded ✓", "ok");
+          }
+        });
+
+        // ─── Responsive Scaling ───
+        function updateScale() {
+            var canvas = document.querySelector("#screen_container canvas");
+            if (canvas && canvas.width > 0 && canvas.height > 0) {
+                var rect = monitorFrame.getBoundingClientRect();
+                var scale = Math.min(rect.width / canvas.width, rect.height / canvas.height);
+                canvas.style.transform = "scale(" + scale + ")";
+            }
+        }
+        var resizeObserver = new ResizeObserver(updateScale);
+        resizeObserver.observe(monitorFrame);
+        emulator.add_listener("screen-set-mode", updateScale);
+
+        // ─── Mouse Coordination (Pointer Lock) ───
+        document.getElementById("screen_container").addEventListener("click", function() {
+            var canvas = document.querySelector("#screen_container canvas");
+            if (canvas && document.pointerLockElement !== canvas) {
+                var request = canvas.requestPointerLock || canvas.mozRequestPointerLock;
+                if (request) {
+                    request.call(canvas);
+                }
+            }
+        });
+
+        emulator.add_listener("emulator-ready", function () {
+          setBootStatus("Emulator ready, waiting for boot…");
+          logBoot("Emulator core ready", "ok");
+          setProgress(85);
+        });
+
+        emulator.add_listener("emulator-started", function () {
+          logBoot("CPU execution started", "ok");
+          setProgress(90);
+          setBootStatus("Booting TinyCore Linux…");
+
+          // Wait for meaningful screen content
+          var tries = 0;
+          var checkScreen = setInterval(function () {
+            var canvas = document.querySelector("#screen_container canvas");
+            if (canvas && canvas.width > 16) {
+              setProgress(100);
+              logBoot("Boot complete — OS is running!", "ok");
+              setTimeout(hideBootOverlay, 400);
+              clearInterval(checkScreen);
+            }
+            tries++;
+            if (tries > 80) {
+              setProgress(100);
+              logBoot("Display timeout — showing screen", "warn");
+              setTimeout(hideBootOverlay, 200);
+              clearInterval(checkScreen);
+            }
+          }, 500);
+        });
+
+      } catch (err) {
+        setBootStatus("Error: " + err.message);
+        bootStatus.classList.add("error");
+        logBoot("FATAL: " + err.message, "err");
+        setStatusBar("error", "Error");
+      }
+
+      // Safety fallback
+      setTimeout(function () {
+        if (!bootOverlay.classList.contains("hidden")) {
+          logBoot("Forced boot overlay dismiss (timeout)", "warn");
+          hideBootOverlay();
+        }
+      }, 45000);
+    });
+  </script>
+
+</body>
+
+</html>
