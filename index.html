@@ -681,7 +681,7 @@
   </div>
 
   <!-- ─── Scripts ─── -->
-  <script src="/v86/libv86.js"></script>
+  <script src="./v86/libv86.js" onerror="window.libv86Error = 'Network error: Failed to load libv86.js (Check if Vercel returned 404 or Adblocker blocked it)'"></script>
   <script>
     // ─── State ───
     var emulator = null;
@@ -839,9 +839,10 @@
       setProgress(5);
 
       if (typeof V86 === "undefined") {
-        setBootStatus("Error: V86 failed to load (SharedArrayBuffer disabled)");
+        var errMsg = window.libv86Error || "SharedArrayBuffer is disabled or script execution crashed.";
+        setBootStatus("Error: V86 failed to load");
         bootStatus.classList.add("error");
-        logBoot("FATAL: V86 is not defined. The Vercel deployment might still be updating, or the browser is blocking SharedArrayBuffer. Please ensure the vercel.json headers are active.", "err");
+        logBoot("FATAL: V86 is not defined. " + errMsg, "err");
         setStatusBar("error", "Error");
         return;
       }
@@ -849,13 +850,13 @@
       try {
         emulator = new V86({
           screen_container: document.getElementById("screen_container"),
-          bios: { url: "/v86/seabios.bin" },
-          vga_bios: { url: "/v86/vgabios.bin" },
-          cdrom: { url: "/TinyCore-current.iso" },
+          bios: { url: "./v86/seabios.bin" },
+          vga_bios: { url: "./v86/vgabios.bin" },
+          cdrom: { url: "./TinyCore-current.iso" },
           autostart: true,
           memory_size: 256 * 1024 * 1024,
           vga_memory_size: 8 * 1024 * 1024,
-          wasm_path: "/v86/v86.wasm",
+          wasm_path: "./v86/v86.wasm",
           network_relay_url: "wss://relay.widgetry.org/",
         });
 
