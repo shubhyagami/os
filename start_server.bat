@@ -8,5 +8,5 @@ echo The server is starting on http://localhost:8080
 echo Keep this window open to keep the server running.
 echo You can also use stop_server.bat to stop it.
 echo.
-node server.js
+node local_server.js
 pause
