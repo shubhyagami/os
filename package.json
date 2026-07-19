@@ -1,0 +1,9 @@
+{
+  "name": "tinycore-online",
+  "version": "1.0.0",
+  "description": "TinyCore Linux running in browser via v86",
+  "main": "local_server.js",
+  "scripts": {
+    "start": "node local_server.js"
+  }
+}

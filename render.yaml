@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: tinycore-online
+    env: node
+    buildCommand: npm install
+    startCommand: node local_server.js
