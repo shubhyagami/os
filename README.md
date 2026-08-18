@@ -1,94 +1,68 @@
 # os
 
-## 🖥️ ASCII Art Banner
+JavaScript simulations of core operating system concepts—process scheduling, memory management, file systems, and synchronization. Designed for students and developers who want to visualize OS internals without compiling C code or running a virtual machine.
 
-```
-   ____  ____
-  / __ \/ __/   Operating System Concepts
- / / / / /_     Simulated in JavaScript
-/ /_/ / __/     by shubhyagami
-\____/_/
-```
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Node.js](https://img.shields.io/badge/Node.js-%E2%89%A516.x-green)](https://nodejs.org/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)](https://github.com/shubhyagami/os/pulls)
 
-## 📦 Badges
+## Features
 
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
-![Node.js](https://img.shields.io/badge/Node.js-≥16.x-green)
-![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)
-![Last Updated](https://img.shields.io/badge/Last%20Updated-2026--07--27-blue)
+- **Process Scheduling**: FCFS, SJF, and Round Robin (configurable quantum)
+- **Memory Management**: Paging and segmentation with real-time page fault visualization
+- **File Systems**: Inodes and directory operations
+- **Synchronization**: Semaphores and mutexes
 
----
+## Getting Started
 
-## 🚀 Quick Start
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) v16.x or higher
+
+### Installation & Usage
 
 ```bash
 # Clone the repository
 git clone https://github.com/shubhyagami/os.git
-
-# Navigate into the project
 cd os
 
-# Install dependencies (if any)
+# Install dependencies
 npm install
 
 # Run the main simulation
 node index.js
+
+# Explore ready-made OS demos
+npm run examples
 ```
 
-> **Pro Tip:** Use `npm run examples` to explore ready-made OS demos.
+### Example: Banker's Algorithm
 
----
-
-## 🌟 Featured Use Case
-
-**Interactive Learning of Operating System Fundamentals**  
-This project provides JavaScript-based simulations for key OS concepts such as:
-
-- Process scheduling (FCFS, SJF, Round Robin)
-- Memory management (paging, segmentation)
-- File system operations (inodes, directories)
-- Synchronization (semaphores, mutexes)
-
-Perfect for students, educators, and hobbyists who want to visualize how an operating system works under the hood — without needing to compile C code or run a virtual machine.
-
----
-
-## 💡 Pro Tips
-
-- Use the `--verbose` flag to see detailed logs of each system call.
-- Modify `config.js` to tweak CPU speed, memory size, or scheduling quantum.
-- Check out the `examples/` folder for ready-to-run scenarios like deadlock detection and page replacement.
-
----
-
-## 📝 Changelog – 2026-07-27
-
-- **Added** new round-robin scheduler with configurable time quantum.
-- **Improved** memory paging visualization (now shows page faults in real time).
-- **Fixed** race condition in semaphore implementation.
-- **Updated** README with badges, quick start, and featured use case.
-
----
-
-## 🎯 Weekly Highlight
-
-**This week's focus:** *Deadlock Avoidance using the Banker's Algorithm*  
-Try the interactive demo by running:
+To see deadlock avoidance in action, run:
 
 ```bash
 node examples/bankers-algorithm.js
 ```
 
-Watch how the system safely allocates resources to multiple processes without entering a deadlock state.
+## Configuration
 
----
+You can tweak simulation parameters by modifying `config.js`. Adjust CPU speed, memory size, or scheduling quantum to suit your needs.
 
-## 💬 Motivational Quote
+## Pro Tips
 
-> *"The best way to predict the future is to implement it."* – David Heinemeier Hansson
+- Add the `--verbose` flag when running a simulation to see detailed logs of each system call.
+- Browse the `examples/` directory for ready-to-run scenarios like deadlock detection and page replacement.
 
----
+## Changelog
 
-## 📄 License
+### 2026-08-19
+- Refined README structure and documentation for clarity.
 
-This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.
+### 2026-07-27
+- Added Round Robin scheduler with configurable time quantum.
+- Improved memory paging visualization to show page faults in real time.
+- Fixed race condition in semaphore implementation.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
