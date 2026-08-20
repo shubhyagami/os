@@ -5,12 +5,12 @@ JavaScript simulations of core operating system concepts, designed for interacti
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Node.js](https://img.shields.io/badge/Node.js-≥16.x-green)](https://nodejs.org/)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)
-![Last Updated](https://img.shields.io/badge/Last%20Updated-2026--08--19-blue)
+![Last Updated](https://img.shields.io/badge/Last%20Updated-2026--08--21-blue)
 
 ## Features
 
-- **Process Scheduling:** Interactive simulations for FCFS, SJF, and Round Robin algorithms.
-- **Memory Management:** Visualize paging, segmentation, and real-time page faults.
+- **Process Scheduling:** Interactive simulations for First-Come, First-Served (FCFS), Shortest Job First (SJF), and Round Robin algorithms.
+- **Memory Management:** Visualize paging, segmentation, and real-time page fault handling.
 - **File System Operations:** Understand inodes and directory structures.
 - **Synchronization:** Explore concurrency control using semaphores and mutexes.
 
@@ -40,7 +40,7 @@ node examples/bankers-algorithm.js
 ## Changelog
 
 **2026-07-27**
-- Added new round-robin scheduler with configurable time quantum.
+- Added new Round Robin scheduler with configurable time quantum.
 - Improved memory paging visualization to display page faults in real time.
 - Fixed race condition in semaphore implementation.
 
