@@ -2,24 +2,24 @@
 
 Interactive JavaScript simulations that illustrate core operating‑system concepts—process scheduling, memory management, file‑system structures, and synchronization primitives—for learning and visualization.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)  
-[![Node.js >= 16](https://img.shields.io/badge/Node.js-%3E%3D16.x-blue.svg)](https://nodejs.org/)  
-[![GitHub](https://img.shields.io/badge/GitHub-shubhyagami%2Fos-blue.svg)](https://github.com/shubhyagami/os)  
-[![Last Updated](https://img.shields.io/github/last-commit/shubhyagami/os?date=2026-08-26)](https://github.com/shubhyagami/os)  
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Node.js >= 16](https://img.shields.io/badge/Node.js-%3E%3D16.x-blue.svg)](https://nodejs.org/)
+[![GitHub](https://img.shields.io/badge/GitHub-shubhyagami%2Fos-blue.svg)](https://github.com/shubhyagami/os)
+[![Last Updated](https://img.shields.io/github/last-commit/shubhyagami/os?date=2026-08-26)](https://github.com/shubhyagami/os)
 
 ## Overview
-A set of visual demos that explore OS fundamentals—process scheduling, memory management, file‑system structures, and synchronization primitives—all executable in a Node.js environment.
+A collection of visual demos that explore fundamental OS topics—process scheduling, memory management, file‑system structures, and synchronization primitives—all executable within a Node.js environment.
 
 ## Features
-- **Process scheduling** – visualise FCFS, SJF, and Round‑Robin; adjust quantum and view metrics.  
-- **Memory management** – experiment with paging, segmentation, and page‑fault handling; inspect cache behavior.  
-- **File‑system model** – explore inodes, directories, and basic file operations.  
-- **Synchronization** – demonstrate semaphores and mutexes to understand thread safety and deadlock avoidance.
+- **Process scheduling** – Visualize FCFS, SJF, and Round‑Robin; adjust quantum and view performance metrics.  
+- **Memory management** – Experiment with paging, segmentation, and page‑fault handling; inspect cache behavior.  
+- **File‑system model** – Explore inodes, directories, and basic file operations.  
+- **Synchronization** – Demonstrate semaphores and mutexes to understand thread safety and deadlock avoidance.
 
 ## Getting Started
 1. Install **Node.js 16 or newer** from https://nodejs.org/.  
 2. Clone the repository: `git clone https://github.com/shubhyagami/os.git`.  
-3. Change to the project folder: `cd os`.  
+3. Navigate to the project folder: `cd os`.  
 4. Install dependencies: `npm install`.  
 5. Run a demo: `node index.js` or select an example, e.g. `node examples/bankers-algorithm.js`.
 
