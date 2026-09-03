@@ -1,7 +1,6 @@
 # OS — Interactive Operating‑System Simulations
 
-A lightweight Node.js toolkit for visualizing core operating‑system concepts such as process scheduling, memory management, file‑system structures, and synchronization primitives.  
-Run the demos in your terminal or integrate them into your teaching material.
+A lightweight Node.js toolkit that visualizes core operating‑system concepts such as process scheduling, memory management, file‑system structures, and synchronization primitives. Run the demos in your terminal or embed them into your teaching material.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Node.js ≥16](https://img.shields.io/badge/Node.js-%3E%3D16.x-blue.svg)](https://nodejs.org/)
@@ -10,14 +9,13 @@ Run the demos in your terminal or integrate them into your teaching material.
 
 ---
 
-## Quick Overview
+## Features
 
-* **Process Scheduling** – Explore FCFS, SJF, and Round‑Robin with adjustable quantum.  
-* **Memory Management** – Simulate paging, segmentation, page‑fault handling, and cache behavior.  
-* **File‑System Model** – Work with inodes, directories, and perform basic file operations.  
-* **Synchronization** – Understand semaphores and mutexes, detect deadlocks, and observe thread safety.
-
-Each demo is a self‑contained Node.js script that prints a step‑by‑step illustration of the chosen OS concept.
+- **Process Scheduling** – Simulate FCFS, SJF, Round‑Robin (configurable quantum) with step‑by‑step output.  
+- **Memory Management** – Paging, segmentation, page‑fault handling, and cache behavior.  
+- **File‑System Model** – Inodes, directories, basic file operations (create, delete, read, write).  
+- **Synchronization** – Semaphores, mutexes, deadlock detection, thread‑safety demonstrations.  
+- **Verbose Logging** – Add `--verbose` to see detailed system‑call logs.  
 
 ---
 
@@ -25,13 +23,18 @@ Each demo is a self‑contained Node.js script that prints a step‑by‑step il
 
 ### Prerequisites
 
-* **Node.js** 16.x or newer
+- Node.js 16.x or newer
 
-### Install
+### Clone the repository
 
 ```bash
 git clone https://github.com/shubhyagami/os.git
 cd os
+```
+
+### Install dependencies
+
+```bash
 npm install
 ```
 
@@ -44,40 +47,41 @@ node index.js
 ### Run a specific example
 
 ```bash
-node examples/bankers-algorithm.js
+node examples/bankers-algorithm.js --verbose
 ```
-
-Add the `--verbose` flag to print detailed system‑call logs.
 
 ---
 
 ## Configuration
 
-Open `config.js` to tweak global settings:
+Edit `config.js` to adjust global settings:
 
-| Setting | Description | Default |
-|---------|-------------|---------|
-| `cpuSpeed` | Speed multiplier for CPU cycles | `1.0` |
-| `memorySize` | Total memory in pages | `64` |
-| `quantum` | Round‑Robin quantum in ticks | `5` |
+| Setting     | Description                               | Default |
+|-------------|---------------------------------------------|---------|
+| `cpuSpeed`  | Speed multiplier for CPU cycles            | `1.0`   |
+| `memorySize`| Total memory in pages                      | `64`    |
+| `quantum`   | Round‑Robin quantum in ticks                | `5`     |
 
-Any change takes effect the next time you run a demo.
+Changes take effect the next time you run a demo.
 
 ---
 
 ## Contributing
 
-We welcome contributions!  
-* Fork the repository, create a feature branch, and submit a pull request.  
-* Follow the existing coding style and add tests where appropriate.  
-* Open issues for bugs or feature ideas.
+1. Fork the repo and clone it locally.  
+2. Create a feature branch (`git checkout -b feature/your-name`).  
+3. Write code that follows the existing style.  
+4. Add tests if you’re touching logic.  
+5. Push, then open a pull request.
+
+Please open issues for bugs or feature suggestions.
 
 ---
 
-## Changelog
+## Changelog (latest)
 
-* **2026‑08‑26** – Added support for multiple scheduling algorithms; improved error handling.  
-* **2026‑07‑15** – Introduced memory‑management visualiser and added verbose logging.
+- **2026‑08‑26** – Added support for multiple scheduling algorithms and improved error handling.  
+- **2026‑07‑15** – Introduced memory‑management visualiser and added verbose logging.
 
 ---
 
