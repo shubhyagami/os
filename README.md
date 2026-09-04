@@ -1,38 +1,34 @@
 # OS – Interactive Operating‑System Simulations
 
-A lightweight, Node.js‑based toolkit for visualizing core operating‑system concepts.  
-It can be run in a terminal or embedded in teaching material, and demonstrates:
+A lightweight Node.js toolkit that visualises core operating‑system concepts in the terminal or within teaching materials.
 
-- Process scheduling (FCFS, SJF, Round‑Robin)
-- Memory management (paging, segmentation, page faults, cache)
-- File‑system structure (inodes, directories, basic file ops)
-- Synchronization primitives (semaphores, mutexes, deadlock detection)
+It covers:
+
+- **Process scheduling** – FCFS, SJF, Round‑Robin (configurable quantum) with step‑by‑step trace  
+- **Memory management** – paging, segmentation, page‑fault handling, simple cache model  
+- **File‑system operations** – inodes, directories, `create`, `delete`, `read`, `write`  
+- **Synchronization** – semaphores, mutexes, deadlock detection, thread‑safety demos  
+- **Verbose logging** – use `--verbose` to see detailed system‑call traces
 
 ---
 
-## Quick Start
+## Getting Started
 
-### Prerequisites
-
-- Node.js **≥ 16.x**
-
-### Installation
-
-``` 
+```bash
+# Clone the repository
 git clone https://github.com/shubhyagami/os.git
 cd os
+
+# Install dependencies
 npm install
-```
 
-### Run the Demo
-
-``` 
+# Run the demo
 node index.js
 ```
 
-### Run an Example (e.g., Banker's algorithm)
+Run one of the bundled examples, e.g.:
 
-```
+```bash
 node examples/bankers-algorithm.js --verbose
 ```
 
@@ -40,11 +36,13 @@ node examples/bankers-algorithm.js --verbose
 
 ## Features
 
-- **Scheduling** – FCFS, SJF, Round‑Robin (configurable quantum) with step‑by‑step trace.  
-- **Memory** – Paging, segmentation, page‑fault handling, and simple cache model.  
-- **File System** – Inodes, directories, `create`, `delete`, `read`, `write`.  
-- **Synchronization** – Semaphores, mutexes, deadlock detection, thread‑safety demos.  
-- **Verbose Logging** – Pass `--verbose` to view detailed system‑call traces.
+| Feature                | Description |
+|------------------------|--------------|
+| **Scheduling**         | FCFS, SJF, Round‑Robin (quantum configurable) with trace output |
+| **Memory Management**  | Paging, segmentation, page‑fault handling, cache simulation |
+| **File System**        | Inode‑based directories and file operations (`create`, `delete`, `read`, `write`) |
+| **Synchronization**   | Semaphores, mutexes, deadlock detection, thread‑safety demos |
+| **Logging**            | `--verbose` flag for detailed traces |
 
 ---
 
@@ -52,35 +50,35 @@ node examples/bankers-algorithm.js --verbose
 
 Edit `config.js` to override global defaults:
 
-| Setting     | Description                               | Default |
-|------------|-------------------------------------------|---------|
-| `cpuSpeed` | Multiplier for simulated CPU cycles       | `1.0`   |
-| `memorySize` | Total memory in pages                    | `64`    |
-| `quantum`  | Round‑Robin quantum (ticks)              | `5`     |
+| Setting     | Purpose                               | Default |
+|------------|---------------------------------------|---------|
+| `cpuSpeed` | Multiplier for simulated CPU cycles   | `1.0`   |
+| `memorySize` | Total memory in pages                | `64`    |
+| `quantum`  | Round‑Robin quantum (ticks)           | `5`     |
 
-Apply changes the next time you run a demo.
+Changes take effect the next time you run a demo.
 
 ---
 
 ## Examples
 
-| File | What it demonstrates |
-|------|--------------------------|
+| File                            | What it demonstrates |
+|---------------------------------|-----------------------|
 | `examples/bankers-algorithm.js` | Resource allocation and deadlock avoidance |
-| `examples/memory-paging.js` | Paging with page‑fault handling |
-| `examples/scheduling-rr.js` | Round‑Robin scheduling |
-| `examples/file-system.js` | File‑system operations with inodes |
+| `examples/memory-paging.js`       | Paging with page‑fault handling |
+| `examples/scheduling-rr.js`       | Round‑Robin scheduling |
+| `examples/file-system.js`        | File‑system operations with inodes |
 
 ---
 
 ## Contributing
 
-1. Fork and clone the repo.  
-2. Create a feature branch (`git checkout -b feature/your-name`).  
-3. Follow existing code style and add tests if you modify logic.  
-4. Push changes and open a pull request.  
+1. Fork the repo.  
+2. Create a feature branch: `git checkout -b feature/your-name`.  
+3. Follow the existing code style; add tests if you alter logic.  
+4. Push and open a pull request.  
 
-Please file issues for bugs or feature requests.
+Please open issues for bugs or feature requests.
 
 ---
 
@@ -99,7 +97,7 @@ MIT © [Shubhya Gami](https://github.com/shubhyagami)
 
 ## Badges
 
-[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Node.js ≥16](https://img.shields.io/badge/Node.js-%3E%3D16.x-blue.svg)](https://nodejs.org/)
-[![GitHub stars](https://img.shields.io/github/stars/shubhyagami/os.svg?style=social&label=Stars)](https://github.com/shubhyagami/os)
-[![Last Commit](https://img.shields.io/github/last-commit/shubhyagami/os)](https://github.com/shubhyagami/os)
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)  
+[![Node.js ≥16](https://img.shields.io/badge/Node.js-%3E%3D16.x-blue.svg)](https://nodejs.org/)  
+[![GitHub stars](https://img.shields.io/github/stars/shubhyagami/os.svg?style=social&label=Stars)](https://github.com/shubhyagami/os)  
+[![GitHub last commit](https://img.shields.io/github/last-commit/shubhyagami/os)](https://github.com/shubhyagami/os)
