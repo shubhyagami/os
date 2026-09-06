@@ -1,45 +1,17 @@
 # os
 
-Interactive operating‑system simulations written in Node.js.
-
-A lightweight toolkit that visualises core OS concepts in the terminal and in educational material.  
-The library provides step‑by‑step tracing, a simple API that can be embedded in other projects, and a set of demos and examples that illustrate common OS mechanisms.
-
----
-
-## Table of contents
-
-- [Features](#features)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Quick start](#quick-start)
-- [Configuration](#configuration)
-- [Examples](#examples)
-- [API](#api)
-- [Testing](#testing)
-- [Contributing](#contributing)
-- [Changelog](#changelog)
-- [License](#license)
-
----
+Interactive operating‑system simulations in Node.js.  
+**os** visualises core OS concepts in the terminal, offers a lightweight API that can be embedded in other projects, and includes a collection of demos that illustrate common OS mechanisms.
 
 ## Features
 
-- **Process scheduling** – FCFS, SJF, Round‑Robin (quantum configurable) with live trace output.
-- **Memory management** – paging, segmentation, page‑fault handling, and a basic cache model.
-- **File‑system operations** – inode‑based directories and files (`create`, `delete`, `read`, `write`).
-- **Synchronization primitives** – semaphores, mutexes, deadlock detection, and thread‑safety demonstrations.
+- **Process scheduling** – FCFS, SJF, Round‑Robin (configurable quantum) with live trace output.  
+- **Memory management** – paging, segmentation, page‑fault handling, and a simple cache model.  
+- **File‑system operations** – inode‑based directories and files (`create`, `delete`, `read`, `write`).  
+- **Synchronization primitives** – semaphores, mutexes, deadlock detection, and thread‑safety demonstrations.  
 - **Verbose logging** – add `--verbose` to any demo or example to see detailed system‑call traces.
 
----
-
-## Prerequisites
-
-- Node.js ≥ 16 (recommended: the current LTS release)
-
----
-
-## Installation
+## Getting Started
 
 ```bash
 # Clone the repository
@@ -50,26 +22,22 @@ cd os
 npm install
 ```
 
----
-
-## Quick start
+Run the bundled interactive demo:
 
 ```bash
-# Run the bundled interactive demo
 npm run demo
+```
 
-# Run a specific example
+For a specific example:
+
+```bash
 node examples/bankers-algorithm.js --verbose
 ```
 
-The demo walks through all core features interactively.  
-Adding `--verbose` prints the underlying system‑call trace to the terminal.
-
----
-
 ## Configuration
 
-Edit `config.js` to override global defaults:
+Global defaults are defined in `config.js`.  
+Example:
 
 ```js
 module.exports = {
@@ -79,18 +47,16 @@ module.exports = {
 };
 ```
 
-Changes take effect the next time a demo or example is run.
-
----
+Changes take effect the next time a demo or example is executed.
 
 ## Examples
 
-| Example file | Demonstration |
-| ------------ | ------------- |
+| Example file | What it shows |
+|--------------|--------------|
 | `examples/bankers-algorithm.js` | Resource allocation and deadlock avoidance |
 | `examples/memory-paging.js` | Paging with page‑fault handling |
 | `examples/scheduling-rr.js` | Round‑Robin scheduling |
-| `examples/file-system.js` | File‑system operations with inodes |
+| `examples/file-system.js` | Inode‑based file‑system operations |
 
 Run any example with:
 
@@ -98,11 +64,10 @@ Run any example with:
 node examples/<file-name> [--verbose]
 ```
 
----
-
 ## API
 
-The core simulation logic is exposed via the `os` module. Import it with:
+The simulation logic is exposed through the `os` module.  
+Import it with:
 
 ```js
 const os = require('os');
@@ -122,9 +87,7 @@ scheduler.addProcess(new Process(2, 3));
 scheduler.run();  // runs until all processes finish
 ```
 
-(See the source files for full class definitions and documented methods.)
-
----
+See the source files for full class definitions and documented methods.
 
 ## Testing
 
@@ -134,38 +97,30 @@ Run the test suite with:
 npm test
 ```
 
-All tests are written with `jest` and cover the core simulation logic.
-
----
+All tests are written with Jest and cover the core simulation logic.
 
 ## Contributing
 
 1. Fork the repository.  
 2. Create a feature branch: `git checkout -b feature/<your‑name>`.  
 3. Follow the existing code style (ESLint).  
-4. Add tests for any new or modified logic.  
+4. Add or extend tests for any new or modified logic.  
 5. Push and open a pull request.
 
-Please open issues for bugs or feature requests.
-
----
+Please file issues for bugs or feature requests.
 
 ## Changelog
 
-* **2026‑08‑26** – Added support for multiple scheduling algorithms and improved error handling.  
-* **2026‑07‑15** – Introduced memory‑management visualiser and verbose logging.
+- **2026‑08‑26** – Added support for multiple scheduling algorithms and improved error handling.  
+- **2026‑07‑15** – Introduced memory‑management visualiser and verbose logging.
 
 For a full list of changes, see the [CHANGELOG](CHANGELOG.md).
-
----
 
 ## License
 
 MIT © [Shubhya Gami](https://github.com/shubhyagami)
 
 ---
-
-## Badges
 
 ![Node.js ≥16](https://img.shields.io/badge/Node.js-%3E%3D16.x-blue.svg)  
 ![MIT License](https://img.shields.io/badge/License-MIT-green.svg)  
