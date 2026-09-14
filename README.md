@@ -1,40 +1,39 @@
 # os
 
-Interactive operating‑system simulations written in JavaScript for the terminal.  
-`os` visualises core OS concepts, offers a lightweight API that can be imported into other projects, and includes a set of demos that illustrate common operating‑system mechanisms.
+Interactive operating‑system simulations built with JavaScript for the terminal.  
+`os` visualises core OS concepts, provides a lightweight API that can be imported into other projects, and ships with demos that showcase common operating‑system mechanisms.
 
-> **Supported Node version** – 16.x and above
+**Supported Node version:** 16.x and newer
 
 ---
 
 ## Features
 
-- **Process scheduling** – FCFS, SJF, Round‑Robin (configurable quantum) with real‑time trace output.
-- **Memory management** – paging, segmentation, page‑fault handling, and a simple cache model.
-- **File system** – inode‑based directories and files (`create`, `delete`, `read`, `write`).
-- **Synchronization primitives** – semaphores, mutexes, deadlock detection, and thread‑safety demonstrations.
-- **Verbose logging** – add `--verbose` to any demo or example to see detailed system‑call traces.
+| Category | What you’ll see |
+|---------|-----------------|
+| **Process scheduling** | FCFS, SJF, Round‑Robin (configurable quantum) with real‑time trace output |
+| **Memory management** | Paging, segmentation, page‑fault handling, a simple cache model |
+| **File system** | Inode‑based directories and files – `create`, `delete`, `read`, `write` |
+| **Synchronization** | Semaphores, mutexes, deadlock detection, thread‑safety demos |
+| **Logging** | Add `--verbose` to any demo or example for detailed system‑call traces |
 
 ---
 
-## Quick Start
+## Getting Started
 
 ```bash
-# Clone the repository
+# Clone the repo
 git clone https://github.com/shubhyagami/os.git
 cd os
 
 # Install dependencies
 npm i
-```
 
-### Run the bundled interactive demo
-
-```bash
+# Run the bundled interactive demo
 npm run demo
 ```
 
-### Run a specific example
+To run a specific example:
 
 ```bash
 node examples/bankers-algorithm.js --verbose
@@ -44,15 +43,14 @@ node examples/bankers-algorithm.js --verbose
 
 ## Configuration
 
-Global defaults live in `config.js`.  
-Edit the file to change the simulation parameters; changes take effect on the next run.
+Global defaults live in `config.js`. Edit this file to tweak simulation parameters; changes take effect on the next run.
 
 ```js
 // config.js
 module.exports = {
   cpuSpeed:   1.0,  // multiplier for simulated CPU cycles
-  memorySize: 64,  // total memory in pages
-  quantum:     5   // Round‑Robin quantum (ticks)
+  memorySize: 64,    // total memory in pages
+  quantum:    5     // Round‑Robin quantum (ticks)
 };
 ```
 
@@ -77,12 +75,12 @@ node examples/<file-name> [--verbose]
 
 ## Library API
 
-The simulation logic is exposed through the `os` module.
+The simulation logic is exposed through the `os` module. For example:
 
 ```js
 const { Scheduler, Process } = require('os');
 
-// Simple First‑Come, First‑Served scheduler
+// Simple FCFS scheduler
 const scheduler = new Scheduler('FCFS');
 
 scheduler.addProcess(new Process(1, 5));
@@ -97,7 +95,7 @@ See the source files for full class definitions and method documentation.
 
 ## Testing
 
-All tests are written with Jest.
+All tests are written with Jest. Run them with:
 
 ```bash
 npm test
@@ -108,7 +106,7 @@ npm test
 ## Contributing
 
 1. Fork the repository.  
-2. Create a branch: `git checkout -b feature/<your‑name>`.  
+2. Create a feature branch: `git checkout -b feature/<your-name>`.  
 3. Follow the existing code style (ESLint).  
 4. Add or extend tests for any new or modified logic.  
 5. Push the branch and open a pull request.
@@ -122,7 +120,7 @@ Please file issues for bugs or feature requests.
 - **2026‑08‑26** – Added support for multiple scheduling algorithms and improved error handling.  
 - **2026‑07‑15** – Introduced memory‑management visualiser and verbose logging.
 
-For a complete history see the [CHANGELOG](CHANGELOG.md).
+See the full history in the [CHANGELOG](CHANGELOG.md).
 
 ---
 
@@ -132,7 +130,10 @@ MIT © [Shubhya Gami](https://github.com/shubhyagami)
 
 ---
 
+## Badges
+
 ![Node.js ≥16](https://img.shields.io/badge/Node.js-%3E%3D16.x-blue.svg)
 ![MIT License](https://img.shields.io/badge/License-MIT-green.svg)
-![GitHub stars](https://img.shields.io/github/stars/shubhyagami/os.svg?style=social&label=Stars)
+![Tests Passing](https://img.shields.io/badge/tests-passing-brightgreen.svg)
+![GitHub Stars](https://img.shields.io/github/stars/shubhyagami/os.svg?style=social&label=Stars)
 ![GitHub last commit](https://img.shields.io/github/last-commit/shubhyagami/os)
