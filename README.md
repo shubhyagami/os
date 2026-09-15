@@ -1,25 +1,25 @@
 # os
 
-Interactive operating‑system simulations built with JavaScript for the terminal.  
-`os` visualises core OS concepts, provides a lightweight API that can be imported into other projects, and ships with demos that showcase common operating‑system mechanisms.
+A terminal‑based, interactive simulator of operating‑system fundamentals written in JavaScript.  
+It visualises scheduling, memory management, file‑system operations, and more, and can be imported as a lightweight library.
 
-**Supported Node version:** 16.x and newer
+**Supported Node.js:** 16.x and newer
 
 ---
 
-## Features
+## 🚀 Features
 
-| Category | What you’ll see |
-|---------|-----------------|
-| **Process scheduling** | FCFS, SJF, Round‑Robin (configurable quantum) with real‑time trace output |
-| **Memory management** | Paging, segmentation, page‑fault handling, a simple cache model |
+| Category | Details |
+| -------- | ------- |
+| **Process scheduling** | FCFS, SJF, Round‑Robin (configurable quantum) with live trace output |
+| **Memory management** | Paging, segmentation, page‑fault handling, simple cache model |
 | **File system** | Inode‑based directories and files – `create`, `delete`, `read`, `write` |
 | **Synchronization** | Semaphores, mutexes, deadlock detection, thread‑safety demos |
-| **Logging** | Add `--verbose` to any demo or example for detailed system‑call traces |
+| **Logging** | `--verbose` flag on demos and examples for detailed system‑call traces |
 
 ---
 
-## Getting Started
+## 📦 Installation
 
 ```bash
 # Clone the repo
@@ -27,13 +27,31 @@ git clone https://github.com/shubhyagami/os.git
 cd os
 
 # Install dependencies
-npm i
+npm install
+```
 
-# Run the bundled interactive demo
+The library can be used in your own projects:
+
+```bash
+# Link locally (global install)
+npm link          # makes `os` available as a global package
+
+# Or add as a normal dependency
+npm install os
+```
+
+---
+
+## 🎮 Getting Started
+
+```bash
+# Launch the bundled interactive demo
 npm run demo
 ```
 
-To run a specific example:
+The demo provides a command‑line interface; use `--help` for a list of commands.
+
+Run a single example directly:
 
 ```bash
 node examples/bankers-algorithm.js --verbose
@@ -41,22 +59,22 @@ node examples/bankers-algorithm.js --verbose
 
 ---
 
-## Configuration
+## ⚙️ Configuration
 
-Global defaults live in `config.js`. Edit this file to tweak simulation parameters; changes take effect on the next run.
+Edit `config.js` to tweak simulation parameters. The changes take effect on the next run.
 
 ```js
 // config.js
 module.exports = {
   cpuSpeed:   1.0,  // multiplier for simulated CPU cycles
-  memorySize: 64,    // total memory in pages
-  quantum:    5     // Round‑Robin quantum (ticks)
+  memorySize: 64,  // total memory, in pages
+  quantum:    5    // Round‑Robin quantum (ticks)
 };
 ```
 
 ---
 
-## Examples
+## 📚 Examples
 
 | File | Description |
 |------|-------------|
@@ -65,7 +83,7 @@ module.exports = {
 | `examples/scheduling-rr.js` | Round‑Robin scheduling |
 | `examples/file-system.js` | Inode‑based file‑system operations |
 
-Run any example with:
+Run any example:
 
 ```bash
 node examples/<file-name> [--verbose]
@@ -73,9 +91,9 @@ node examples/<file-name> [--verbose]
 
 ---
 
-## Library API
+## 📖 Library API
 
-The simulation logic is exposed through the `os` module. For example:
+The simulation logic is exposed via the `os` module. A quick example:
 
 ```js
 const { Scheduler, Process } = require('os');
@@ -89,13 +107,13 @@ scheduler.addProcess(new Process(2, 3));
 scheduler.run(); // runs until all processes finish
 ```
 
-See the source files for full class definitions and method documentation.
+Full documentation of classes and methods is available in the `src` directory.
 
 ---
 
-## Testing
+## 🧪 Testing
 
-All tests are written with Jest. Run them with:
+All tests are written with Jest.
 
 ```bash
 npm test
@@ -103,19 +121,19 @@ npm test
 
 ---
 
-## Contributing
+## 🤝 Contributing
 
 1. Fork the repository.  
 2. Create a feature branch: `git checkout -b feature/<your-name>`.  
-3. Follow the existing code style (ESLint).  
+3. Follow the existing coding style enforced by ESLint.  
 4. Add or extend tests for any new or modified logic.  
 5. Push the branch and open a pull request.
 
-Please file issues for bugs or feature requests.
+Please raise issues for bugs or feature requests.
 
 ---
 
-## Changelog
+## 📅 Changelog
 
 - **2026‑08‑26** – Added support for multiple scheduling algorithms and improved error handling.  
 - **2026‑07‑15** – Introduced memory‑management visualiser and verbose logging.
@@ -124,13 +142,13 @@ See the full history in the [CHANGELOG](CHANGELOG.md).
 
 ---
 
-## License
+## 📄 License
 
 MIT © [Shubhya Gami](https://github.com/shubhyagami)
 
 ---
 
-## Badges
+## 📌 Badges
 
 ![Node.js ≥16](https://img.shields.io/badge/Node.js-%3E%3D16.x-blue.svg)
 ![MIT License](https://img.shields.io/badge/License-MIT-green.svg)
