@@ -1,61 +1,69 @@
 # os
 
-Terminal‑based interactive simulator of operating‑system fundamentals **written in JavaScript**.  
-It visualises scheduling, memory management, file‑system operations, and synchronization primitives, and can be imported as a lightweight library.
+A terminal‑based interactive simulator written in JavaScript that visualises core operating‑system concepts such as scheduling, memory management, file‑system operations, and synchronization primitives.  
+It can also be consumed as a lightweight library from Node.js projects.
 
-Supported Node.js: **16+**
+Supported Node.js: **>= 16**
 
 ---
 
 ## 📦 Installation
 
 ```bash
-# Clone and install
+# Clone the repository
 git clone https://github.com/shubhyagami/os.git
 cd os
+
+# Install dependencies
 npm install
 ```
 
-Use the library in your own projects:
+The CLI is part of the package.  
+To use `os` as a global command:
 
 ```bash
-# Global link (for CLI usage)
-npm link          # makes `os` available as a global package
+npm link            # makes `os` available globally
+```
 
-# Or add as a normal dependency
+Alternatively, add it as a normal dependency:
+
+```bash
 npm install os
 ```
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Quick Start
 
-**Run the bundled interactive demo**
+### Run the interactive demo
 
 ```bash
 npm run demo
 ```
 
-The demo provides a command‑line interface.  Use `--help` for a list of commands.
+The demo launches a command‑line interface. Use `--help` to see the available commands.
 
-**Or run a single example directly**
+### Run a single example directly
 
 ```bash
 node examples/bankers-algorithm.js --verbose
 ```
 
+Replace the file name with any script under `examples/`.
+
 ---
 
 ## ⚙️ Configuration
 
-Edit `config.js` to tweak simulation parameters.  The changes take effect on the next run.
+Simulation parameters live in `config.js`.  
+The file is re‑loaded on every run, so you can tweak the values before starting the demo or an example.
 
 ```js
 // config.js
 module.exports = {
-  cpuSpeed:   1.0,  // multiplier for simulated CPU cycles
-  memorySize: 64,   // total memory, in pages
-  quantum:    5     // Round‑Robin quantum (ticks)
+  cpuSpeed:   1.0, // multiplier for simulated CPU cycles
+  memorySize: 64,  // total memory, in pages
+  quantum:     5   // Round‑Robin quantum (ticks)
 };
 ```
 
@@ -63,14 +71,14 @@ module.exports = {
 
 ## 📚 Examples
 
-| File | Description |
-|------|-------------|
+| File                     | Description                                 |
+|--------------------------|---------------------------------------------|
 | `examples/bankers-algorithm.js` | Resource allocation and deadlock avoidance |
-| `examples/memory-paging.js` | Paging with page‑fault handling |
-| `examples/scheduling-rr.js` | Round‑Robin scheduling |
-| `examples/file-system.js` | Inode‑based file‑system operations |
+| `examples/memory-paging.js`     | Paging with page‑fault handling           |
+| `examples/scheduling-rr.js`     | Round‑Robin scheduling                    |
+| `examples/file-system.js`       | Inode‑based file‑system operations        |
 
-Run an example:
+Run an example with:
 
 ```bash
 node examples/<file-name> [--verbose]
@@ -79,8 +87,6 @@ node examples/<file-name> [--verbose]
 ---
 
 ## 📖 Library API
-
-The simulation logic is exposed via the `os` module.
 
 ```js
 const { Scheduler, Process } = require('os');
@@ -94,7 +100,7 @@ scheduler.addProcess(new Process(2, 3));
 scheduler.run(); // runs until all processes finish
 ```
 
-Full documentation of classes and methods is available in the `src` directory.
+For full documentation of classes and methods, see the `src` directory.
 
 ---
 
@@ -116,7 +122,7 @@ npm test
 4. Add or extend tests for any new or modified logic.  
 5. Push the branch and open a pull request.
 
-Please raise issues for bugs or feature requests.
+Please open issues for bugs or feature requests.
 
 ---
 
