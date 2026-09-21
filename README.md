@@ -1,13 +1,35 @@
 # os
-
-A terminal‑based interactive simulator written in JavaScript that visualises core operating‑system concepts such as scheduling, memory management, file‑system operations, and synchronization primitives.  
-It can also be consumed as a lightweight library from Node.js projects.
-
-Supported Node.js: **>= 16**
+Terminal‑based interactive simulator written in JavaScript that visualises core operating‑system concepts such as scheduling, memory management, file‑system operations, and synchronization primitives.  
+It can also be consumed as a lightweight library in Node.js projects.
 
 ---
 
-## 📦 Installation
+## 📌 Overview
+
+`os` lets you experiment with operating‑system kernels from the command line.  
+It supports:
+
+* **Scheduling** – FCFS, RR, priority, lottery, etc.  
+* **Memory management** – paging, swapping, protection bits.  
+* **Dead‑lock avoidance** – Banker’s algorithm.  
+* **File‑system** – inode‑based operations and directory trees.  
+* **Synchronization** – semaphores, mutexes, barriers.  
+
+All logic is written in plain JavaScript, runs on Node.js ≥ 16, and is fully unit‑tested.
+
+---
+
+## 🚀 Features
+
+* Interactive CLI demo with visual feedback.  
+* Modular library API for integration in other projects.  
+* Easily tweak simulation parameters (`config.js`).  
+* Self‑contained examples in the `examples/` folder.  
+* Jest test suite and continuous‑integration ready.  
+
+---
+
+## 🔧 Getting Started
 
 ```bash
 # Clone the repository
@@ -18,51 +40,44 @@ cd os
 npm install
 ```
 
-The CLI is part of the package.  
-To use `os` as a global command:
-
-```bash
-npm link            # makes `os` available globally
-```
-
-Alternatively, add it as a normal dependency:
-
-```bash
-npm install os
-```
-
----
-
-## 🚀 Quick Start
-
-### Run the interactive demo
+Run the interactive demo:
 
 ```bash
 npm run demo
 ```
 
-The demo launches a command‑line interface. Use `--help` to see the available commands.
-
-### Run a single example directly
+Or execute a single example:
 
 ```bash
 node examples/bankers-algorithm.js --verbose
 ```
 
-Replace the file name with any script under `examples/`.
+---
+
+## 🔩 Installation
+
+`os` can be used locally or installed globally.
+
+```bash
+# As a global command
+npm link            # makes `os` available as a CLI
+
+# As a regular dependency
+npm install os
+```
+
+The CLI is bundled with the package, so no extra config is needed.
 
 ---
 
 ## ⚙️ Configuration
 
-Simulation parameters live in `config.js`.  
-The file is re‑loaded on every run, so you can tweak the values before starting the demo or an example.
+Edit `config.js` before starting a demo or example. The file is reloaded on every run.
 
 ```js
-// config.js
 module.exports = {
-  cpuSpeed:   1.0, // multiplier for simulated CPU cycles
-  memorySize: 64,  // total memory, in pages
+  cpuSpeed:   1.0,   // multiplier for simulated CPU cycles
+  memorySize: 64,   // total memory, in pages
   quantum:     5   // Round‑Robin quantum (ticks)
 };
 ```
@@ -71,14 +86,14 @@ module.exports = {
 
 ## 📚 Examples
 
-| File                     | Description                                 |
-|--------------------------|---------------------------------------------|
-| `examples/bankers-algorithm.js` | Resource allocation and deadlock avoidance |
-| `examples/memory-paging.js`     | Paging with page‑fault handling           |
-| `examples/scheduling-rr.js`     | Round‑Robin scheduling                    |
-| `examples/file-system.js`       | Inode‑based file‑system operations        |
+| Example file | What it shows |
+|--------------|---------------|
+| `examples/bankers-algorithm.js` | Resource allocation and dead‑lock avoidance |
+| `examples/memory-paging.js` | Paging with page‑fault handling |
+| `examples/scheduling-rr.js` | Round‑Robin scheduling |
+| `examples/file-system.js` | Inode‑based file‑system operations |
 
-Run an example with:
+Run an example:
 
 ```bash
 node examples/<file-name> [--verbose]
@@ -100,13 +115,13 @@ scheduler.addProcess(new Process(2, 3));
 scheduler.run(); // runs until all processes finish
 ```
 
-For full documentation of classes and methods, see the `src` directory.
+For full class and method documentation, explore the `src/` directory.
 
 ---
 
 ## 🧪 Testing
 
-All tests are written with Jest.
+All tests use Jest.
 
 ```bash
 npm test
@@ -116,22 +131,21 @@ npm test
 
 ## 🤝 Contributing
 
-1. Fork the repository.  
+1. Fork the repo.  
 2. Create a feature branch: `git checkout -b feature/<your-name>`.  
-3. Follow the existing coding style enforced by ESLint.  
-4. Add or extend tests for any new or modified logic.  
-5. Push the branch and open a pull request.
+3. Follow the ESLint rules; add tests for any changes.  
+4. Push and open a pull request.
 
-Please open issues for bugs or feature requests.
+Open issues for bugs or feature requests.
 
 ---
 
-## 📅 Changelog
+## 📆 Changelog
 
 - **2026‑08‑26** – Added support for multiple scheduling algorithms and improved error handling.  
 - **2026‑07‑15** – Introduced memory‑management visualiser and verbose logging.
 
-See the full history in the [CHANGELOG](CHANGELOG.md).
+See the full history in `CHANGELOG.md`.
 
 ---
 
@@ -141,10 +155,10 @@ MIT © [Shubhya Gami](https://github.com/shubhyagami)
 
 ---
 
-## 🏷️ Badges
+## 🎖 Badges
 
 ![Node.js ≥16](https://img.shields.io/badge/Node.js-%3E%3D16.x-blue.svg)
-![MIT License](https://img.shields.io/badge/License-MIT-green.svg)
+![MIT](https://img.shields.io/badge/License-MIT-green.svg)
 ![Tests Passing](https://img.shields.io/badge/tests-passing-brightgreen.svg)
 ![GitHub Stars](https://img.shields.io/github/stars/shubhyagami/os.svg?style=social&label=Stars)
 ![GitHub Last Commit](https://img.shields.io/github/last-commit/shubhyagami/os)
