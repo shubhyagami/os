@@ -1,19 +1,19 @@
 # os
-Terminal‑based interactive simulator written in JavaScript that visualises core operating‑system concepts such as scheduling, memory management, file‑system operations, and synchronization primitives.  
-It can also be consumed as a lightweight library in Node.js projects.
+
+**A terminal‑based interactive simulator** written in JavaScript that visualises core operating‑system concepts such as scheduling, memory management, file‑system operations, and synchronization primitives.  
+It can also be imported as a lightweight Node.js library.
 
 ---
 
 ## 📌 Overview
 
-`os` lets you experiment with operating‑system kernels from the command line.  
-It supports:
+`os` lets you experiment with operating‑system kernels from the command line. It supports:
 
-* **Scheduling** – FCFS, RR, priority, lottery, etc.  
+* **Scheduling** – First‑Come‑First‑Serve, Round Robin, priority, lottery, etc.  
 * **Memory management** – paging, swapping, protection bits.  
 * **Dead‑lock avoidance** – Banker’s algorithm.  
 * **File‑system** – inode‑based operations and directory trees.  
-* **Synchronization** – semaphores, mutexes, barriers.  
+* **Synchronization** – semaphores, mutexes, barriers.
 
 All logic is written in plain JavaScript, runs on Node.js ≥ 16, and is fully unit‑tested.
 
@@ -21,11 +21,11 @@ All logic is written in plain JavaScript, runs on Node.js ≥ 16, and is ful
 
 ## 🚀 Features
 
-* Interactive CLI demo with visual feedback.  
-* Modular library API for integration in other projects.  
-* Easily tweak simulation parameters (`config.js`).  
-* Self‑contained examples in the `examples/` folder.  
-* Jest test suite and continuous‑integration ready.  
+- Interactive CLI demo with real‑time visual feedback.  
+- Modular library API for integration into other projects.  
+- Easily tweak simulation parameters via `config.js`.  
+- Self‑contained examples in the `examples/` folder.  
+- Jest test suite and CI ready.
 
 ---
 
@@ -54,7 +54,7 @@ node examples/bankers-algorithm.js --verbose
 
 ---
 
-## 🔩 Installation
+## 📦 Installation
 
 `os` can be used locally or installed globally.
 
@@ -66,19 +66,19 @@ npm link            # makes `os` available as a CLI
 npm install os
 ```
 
-The CLI is bundled with the package, so no extra config is needed.
+The CLI is bundled with the package, so no extra configuration is needed.
 
 ---
 
 ## ⚙️ Configuration
 
-Edit `config.js` before starting a demo or example. The file is reloaded on every run.
+Edit `config.js` before starting a demo or an example. The file is reloaded on every run.
 
 ```js
 module.exports = {
   cpuSpeed:   1.0,   // multiplier for simulated CPU cycles
-  memorySize: 64,   // total memory, in pages
-  quantum:     5   // Round‑Robin quantum (ticks)
+  memorySize: 64,    // total memory, in pages
+  quantum:     5     // Round‑Robin quantum (ticks)
 };
 ```
 
@@ -86,12 +86,12 @@ module.exports = {
 
 ## 📚 Examples
 
-| Example file | What it shows |
-|--------------|---------------|
-| `examples/bankers-algorithm.js` | Resource allocation and dead‑lock avoidance |
-| `examples/memory-paging.js` | Paging with page‑fault handling |
-| `examples/scheduling-rr.js` | Round‑Robin scheduling |
-| `examples/file-system.js` | Inode‑based file‑system operations |
+| Example file                 | What it shows                                            |
+|-----------------------------|----------------------------------------------------------|
+| `examples/bankers-algorithm.js` | Resource allocation and dead‑lock avoidance             |
+| `examples/memory-paging.js`    | Paging with page‑fault handling                        |
+| `examples/scheduling-rr.js`    | Round‑Robin scheduling                                 |
+| `examples/file-system.js`      | Inode‑based file‑system operations                     |
 
 Run an example:
 
@@ -131,7 +131,7 @@ npm test
 
 ## 🤝 Contributing
 
-1. Fork the repo.  
+1. Fork the repository.  
 2. Create a feature branch: `git checkout -b feature/<your-name>`.  
 3. Follow the ESLint rules; add tests for any changes.  
 4. Push and open a pull request.
@@ -160,5 +160,6 @@ MIT © [Shubhya Gami](https://github.com/shubhyagami)
 ![Node.js ≥16](https://img.shields.io/badge/Node.js-%3E%3D16.x-blue.svg)
 ![MIT](https://img.shields.io/badge/License-MIT-green.svg)
 ![Tests Passing](https://img.shields.io/badge/tests-passing-brightgreen.svg)
+![CI](https://github.com/shubhyagami/os/actions/workflows/node.js.yml/badge.svg)
 ![GitHub Stars](https://img.shields.io/github/stars/shubhyagami/os.svg?style=social&label=Stars)
 ![GitHub Last Commit](https://img.shields.io/github/last-commit/shubhyagami/os)
