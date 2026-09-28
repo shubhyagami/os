@@ -1,44 +1,30 @@
 [K[2m  [2mmodel z-ai/glm-5.3-flash failed, trying next...[0m[0m
 [K[2m  [2mmodel deepseek-ai/deepseek-v4.1-flash failed, trying next...[0m[0m
-# os
+# os – Operating‑System Concepts Simulator
 
-**`os`** is a terminal‑based interactive simulator written in JavaScript that visualises core operating‑system concepts such as scheduling, memory management, file‑system operations, and synchronization primitives.  
-It can also be imported as a lightweight Node.js library.
+`os` is a lightweight JavaScript library and a terminal‑based simulator that visualises core operating‑system concepts such as scheduling, memory management, file‑system operations, and synchronization primitives.  
+It runs in Node.js ≥ 16 and can be used as a CLI demo or imported into any project.
 
 ---
 
 ## 📌 Overview
 
-`os` lets you experiment with operating‑system kernels from the command line or as a reusable library. It supports:
-
 | Feature | Description |
 |---------|-------------|
-| **Scheduling** | FCFS, Round‑Robin, Priority, Lottery, etc. |
+| **Scheduling** | FCFS, Round‑Robin, Priority, Lottery, … |
 | **Memory management** | Paging, swapping, protection bits |
 | **Dead‑lock avoidance** | Banker's algorithm |
-| **File‑system** | Inode‑based operations and directory trees |
+| **File‑system** | In‑ode based operations & directory trees |
 | **Synchronization** | Semaphores, mutexes, barriers |
 
-All logic is plain JavaScript, runs on Node.js ≥ 16, and is fully unit‑tested.
+All logic is written in plain JavaScript, fully unit‑tested, and no external runtime is required.
 
 ---
 
-## 🚀 Features
-
-- Interactive CLI demo with real‑time visual feedback  
-- Modular library API – drop it into your project with one line  
-- Customisable simulation parameters via `config.js`  
-- Self‑contained examples in the `examples/` folder  
-- Jest test suite and CI ready
-
----
-
-## 📦 Installation
-
-`os` can be used locally or installed globally.
+## 🚀 Getting Started
 
 ```bash
-# Clone the repository
+# Clone the repo
 git clone https://github.com/shubhyagami/os.git
 cd os
 
@@ -49,22 +35,27 @@ npm install
 ### Global CLI
 
 ```bash
-npm link            # makes `os` available as a CLI
+npm link          # Make `os` available as a global command
+```
+
+```bash
+os demo           # Run the interactive demo
 ```
 
 ### Local usage
 
 ```bash
 npm install os
+node -e "require('os').demo();"   # or require the API in your code
 ```
 
-`os` ships with a bundled CLI, so no additional configuration is needed.
+> *Tip:* The bundled CLI is automatically installed with the package, so you can call it directly after a local install: `npx os demo`.
 
 ---
 
 ## ⚙️ Configuration
 
-Edit `config.js` before starting a demo or an example. The file is reloaded on every run.
+Edit `config.js` to tailor the simulation parameters. The file is reloaded on each run.
 
 ```js
 module.exports = {
@@ -76,35 +67,29 @@ module.exports = {
 
 ---
 
-## ▶️ Getting Started
+## ▶️ Features
 
-### Interactive demo
-
-```bash
-npm run demo
-```
-
-### Run a single example
-
-```bash
-node examples/bankers-algorithm.js --verbose
-```
+- **Interactive CLI** – real‑time visual feedback in the terminal  
+- **Extensible API** – import `Scheduler`, `Process`, `Memory`, etc. into any Node.js project  
+- **Modular configuration** – change simulation parameters via `config.js`  
+- **Self‑contained examples** – see the `examples/` folder for ready‑to‑run demos  
+- **Robust testing** – Jest test suite and CI integration
 
 ---
 
 ## 📚 Examples
 
-| Example file                         | What it shows |
-|--------------------------------------|---------------|
-| `examples/bankers-algorithm.js`      | Resource allocation & dead‑lock avoidance |
-| `examples/memory-paging.js`           | Paging with page‑fault handling |
-| `examples/scheduling-rr.js`           | Round‑Robin scheduling |
-| `examples/file-system.js`             | Inode‑based file‑system operations |
+| File | What it demonstrates |
+|------|----------------------|
+| `examples/bankers-algorithm.js` | Resource allocation and dead‑lock avoidance |
+| `examples/memory-paging.js` | Paging with page‑fault handling |
+| `examples/scheduling-rr.js` | Round‑Robin scheduling |
+| `examples/file-system.js` | In‑ode based file‑system operations |
 
 Run an example:
 
 ```bash
-node examples/<file-name> [--verbose]
+node examples/<example-file> [--verbose]
 ```
 
 ---
@@ -116,14 +101,13 @@ const { Scheduler, Process } = require('os');
 
 // Simple FCFS scheduler
 const scheduler = new Scheduler('FCFS');
-
 scheduler.addProcess(new Process(1, 5));
 scheduler.addProcess(new Process(2, 3));
 
-scheduler.run(); // runs until all processes finish
+scheduler.run(); // executes until all processes finish
 ```
 
-For full class and method documentation, explore the `src/` directory.
+For a complete reference, see the `src/` folder. Each class is documented with JSDoc comments.
 
 ---
 
@@ -135,25 +119,27 @@ All tests use Jest.
 npm test
 ```
 
+Coverage reports are available after running `npm test`.
+
 ---
 
 ## 🤝 Contributing
 
 1. Fork the repository.  
-2. Create a feature branch: `git checkout -b feature/<your‑name>`.  
-3. Follow the ESLint rules and add tests for any changes.  
-4. Push and open a pull request.  
+2. Create a feature branch: `git checkout -b feature/<name>`.  
+3. Follow the ESLint guidelines and write unit tests for any new functionality.  
+4. Push your branch and open a pull request.  
 
-Open issues for bugs or feature requests.
+Please open issues for bugs or feature requests.
 
 ---
 
 ## 📆 Changelog
 
-- **2026‑08‑26** – Added support for multiple scheduling algorithms and improved error handling.  
-- **2026‑07‑15** – Introduced memory‑management visualiser and verbose logging.
+- **2026‑08‑26** – Added multiple scheduling algorithms and enhanced error handling.  
+- **2026‑07‑15** – Introduced memory‑management visualiser and verbose logging mode.  
 
-See the full history in `CHANGELOG.md`.
+For a full history, see `CHANGELOG.md`.
 
 ---
 
