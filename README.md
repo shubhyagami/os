@@ -1,4 +1,7 @@
 [K[2m  [2mmodel z-ai/glm-5.3-flash failed, trying next...[0m[0m
+[K[2m  [2mmodel deepseek-ai/deepseek-v4.1-flash failed, trying next...[0m[0m
+[K[2m  [2mmodel openai/gpt-oss-20b failed, trying next...[0m[0m
+[K[2m  [2mmodel openai/gpt-oss-120b failed, trying next...[0m[0m
 # os – Operating System Concepts Simulator
 
 [![Node.js ≥16](https://img.shields.io/badge/Node.js-%3E%3D16.x-blue.svg)](https://nodejs.org/)
@@ -7,28 +10,32 @@
 [![CI](https://github.com/shubhyagami/os/actions/workflows/node.js.yml/badge.svg)](https://github.com/shubhyagami/os/actions/workflows/node.js.yml)
 [![GitHub Stars](https://img.shields.io/github/stars/shubhyagami/os.svg?style=social&label=Stars)](https://github.com/shubhyagami/os)
 
-`os` is a lightweight JavaScript library and terminal-based simulator that visualizes core operating-system concepts such as scheduling, memory management, file-system operations, and synchronization primitives. It runs on Node.js 16 or newer and can be used as a CLI demo or imported into another Node.js project.
+`os` is a lightweight JavaScript library and terminal-based simulator designed to visualize core operating system concepts. From CPU scheduling and memory management to file system operations and synchronization primitives, it provides a hands-on way to explore OS internals.
+
+Built for Node.js 16+, it can be used as a standalone CLI demo or integrated as a module into your own Node.js projects.
 
 ## 📌 Overview
 
-| Feature | Description |
-|---------|-------------|
-| **Scheduling** | FCFS, Round-Robin, Priority, Lottery, and more |
-| **Memory management** | Paging, swapping, protection bits |
-| **Deadlock avoidance** | Banker's algorithm |
-| **File system** | Inode-based operations and directory trees |
-| **Synchronization** | Semaphores, mutexes, barriers |
+| Module | Capabilities |
+| :--- | :--- |
+| **Scheduling** | FCFS, Round-Robin, Priority, and Lottery scheduling |
+| **Memory Management** | Paging, swapping, and protection bits |
+| **Deadlock Avoidance** | Implementation of the Banker's Algorithm |
+| **File System** | Inode-based operations and directory tree structures |
+| **Synchronization** | Semaphores, mutexes, and barriers |
 
-All logic is written in plain JavaScript, covered by unit tests, and has no external runtime dependencies.
+The library is written in plain JavaScript with zero external runtime dependencies and is backed by a comprehensive suite of unit tests.
 
 ## 🚀 Getting Started
 
-### Requirements
+### Prerequisites
 
-- Node.js 16 or newer
+- Node.js 16.x or newer
 - npm
 
-### Clone and install
+### Installation
+
+Clone the repository and install dependencies:
 
 ```bash
 git clone https://github.com/shubhyagami/os.git
@@ -36,46 +43,68 @@ cd os
 npm install
 ```
 
-### Run the demo
+### Running the Demo
+
+To use `os` as a global command:
 
 ```bash
-npm link          # make `os` available as a global command
-os demo           # run the interactive demo
+npm link
+os demo
 ```
 
-### Local usage
+Alternatively, run it without linking using npx:
 
 ```bash
-npm install os
-node -e "require('os').demo();"   # or require the API in your code
+npx os demo
 ```
 
-> **Tip:** The bundled CLI is installed with the package, so you can also run it directly after a local install: `npx os demo`.
+### Library Usage
+
+If you want to use the simulator programmatically in your own code:
+
+```javascript
+const os = require('os');
+
+// Launch the interactive demo
+os.demo();
+
+// Or import specific modules
+const { Scheduler, Memory } = require('os');
+```
 
 ## ⚙️ Configuration
 
-Edit `config.js` to tailor the simulation parameters. The file is reloaded on each run.
+Simulation parameters can be adjusted in `config.js`. These settings are reloaded every time the simulation starts.
 
-```js
+```javascript
 module.exports = {
-  cpuSpeed:   1.0,   // multiplier for simulated CPU cycles
-  memorySize: 64,    // total memory, in pages
-  quantum:    5      // Round-Robin quantum in ticks
+  cpuSpeed:   1.0,   // Multiplier for simulated CPU cycles
+  memorySize: 64,    // Total memory capacity (in pages)
+  quantum:    5      // Time quantum for Round-Robin scheduling (in ticks)
 };
 ```
 
-## ▶️ Features
+## ✨ Key Features
 
-- **Interactive CLI** – real-time visual feedback in the terminal
-- **Extensible API** – import `Scheduler`, `Process`, `Memory`, etc. into any Node.js project
-- **Modular configuration** – change simulation parameters via `config.js`
-- **Self-contained examples** – see the `examples/` folder for ready-to-run demos
-- **Robust testing** – Jest test suite and CI integration
+- **Interactive CLI**: Real-time visualization of OS state directly in your terminal.
+- **Extensible API**: Modular classes (`Scheduler`, `Process`, `Memory`, etc.) for custom simulations.
+- **Modular Config**: Easily tune simulation behavior via a central configuration file.
+- **Built-in Examples**: A dedicated `examples/` folder containing ready-to-run scenarios.
+- **CI/CD Integration**: Fully tested via Jest with automated coverage reports.
 
 ## 📚 Examples
 
-| File | What it demonstrates |
-|------|----------------------|
+Explore the `examples/` directory to see the library in action:
+
+| File | Description |
+| :--- | :--- |
 | `examples/bankers-algorithm.js` | Resource allocation and deadlock avoidance |
-| `examples/memory-paging.js` | Paging with page-fault handling |
-| `examples/scheduling-rr.js` |
+| `examples/memory-paging.js` | Paging mechanisms and page-fault handling |
+| `examples/scheduling-rr.js` | Round-Robin CPU scheduling visualization |
+
+## 🧪 Testing
+
+Run the test suite to ensure everything is working correctly:
+
+```bash
+npm test
